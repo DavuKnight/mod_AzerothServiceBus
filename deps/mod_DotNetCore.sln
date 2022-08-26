@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{77FDB7B4-3FC6-42CA-953F-AF680EBC6411}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1F8B59E8-CF4F-49CD-8B72-13B0F90036AA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreAzeroth", "DotNetCoreAzeroth\DotNetCoreAzeroth.csproj", "{B4281DCC-0DD7-4437-A30B-273F33726708}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzerothDotNetCore", "AzerothDotNetCore\AzerothDotNetCore.csproj", "{29D28D05-567C-4882-A933-7CB1DA2F7D29}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mod_DotNetCoreEvents", "mod_DotNetCoreEvents", "{D62B7DD4-EAC5-4C40-B6F8-1EAB2C5DCF8A}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\mod_DotNetCoreEvents\DotNetCoreEvents.conf.dist = ..\src\mod_DotNetCoreEvents\DotNetCoreEvents.conf.dist
+		..\src\mod_DotNetCoreEvents\DotNetCorePlayerScript.cpp = ..\src\mod_DotNetCoreEvents\DotNetCorePlayerScript.cpp
+		..\src\mod_DotNetCoreEvents\DotNetCoreWorldScript.cpp = ..\src\mod_DotNetCoreEvents\DotNetCoreWorldScript.cpp
+		..\src\mod_DotNetCoreEvents\DotNetCore_loader.cpp = ..\src\mod_DotNetCoreEvents\DotNetCore_loader.cpp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mod_SDK", "mod_SDK", "{275EC2D8-30FF-41CC-9BAA-E20ED4A1E310}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\mod_SDK\SDK.cpp = ..\src\mod_SDK\SDK.cpp
+		..\src\mod_SDK\SDK.h = ..\src\mod_SDK\SDK.h
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4281DCC-0DD7-4437-A30B-273F33726708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4281DCC-0DD7-4437-A30B-273F33726708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4281DCC-0DD7-4437-A30B-273F33726708}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B4281DCC-0DD7-4437-A30B-273F33726708}.Debug|x64.Build.0 = Debug|Any CPU
+		{B4281DCC-0DD7-4437-A30B-273F33726708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4281DCC-0DD7-4437-A30B-273F33726708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4281DCC-0DD7-4437-A30B-273F33726708}.Release|x64.ActiveCfg = Release|Any CPU
+		{B4281DCC-0DD7-4437-A30B-273F33726708}.Release|x64.Build.0 = Release|Any CPU
+		{29D28D05-567C-4882-A933-7CB1DA2F7D29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29D28D05-567C-4882-A933-7CB1DA2F7D29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29D28D05-567C-4882-A933-7CB1DA2F7D29}.Debug|x64.ActiveCfg = Debug|x64
+		{29D28D05-567C-4882-A933-7CB1DA2F7D29}.Debug|x64.Build.0 = Debug|x64
+		{29D28D05-567C-4882-A933-7CB1DA2F7D29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29D28D05-567C-4882-A933-7CB1DA2F7D29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29D28D05-567C-4882-A933-7CB1DA2F7D29}.Release|x64.ActiveCfg = Release|x64
+		{29D28D05-567C-4882-A933-7CB1DA2F7D29}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B4281DCC-0DD7-4437-A30B-273F33726708} = {77FDB7B4-3FC6-42CA-953F-AF680EBC6411}
+		{29D28D05-567C-4882-A933-7CB1DA2F7D29} = {77FDB7B4-3FC6-42CA-953F-AF680EBC6411}
+		{D62B7DD4-EAC5-4C40-B6F8-1EAB2C5DCF8A} = {1F8B59E8-CF4F-49CD-8B72-13B0F90036AA}
+		{275EC2D8-30FF-41CC-9BAA-E20ED4A1E310} = {1F8B59E8-CF4F-49CD-8B72-13B0F90036AA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B904D99E-3C0A-4475-9985-79E16D15A9D1}
+	EndGlobalSection
+EndGlobal
