@@ -1,4 +1,5 @@
-﻿using AzerothServiceBus.Models;
+using AzerothServiceBus.Models;
+using Confluent.Kafka;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -10,56 +11,141 @@ namespace AzerothServiceBus
 {
     public static class PlayerEvents
     {
+        static IProducer<Null, MarchelledPlayer> nullBuilder;
+        static PlayerEvents()
+        {
+            try
+            {
+                var config = new ProducerConfig
+                {
+                    BootstrapServers = "localhost:9092"
+                };
+                nullBuilder = new ProducerBuilder<Null, MarchelledPlayer>(config).Build();
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+        }
+
+        private static void sendPlayerEvent(string eventName, MarchelledPlayer player)
+        {
+            Console.WriteLine(eventName);
+            nullBuilder.Produce(eventName, new Message<Null, MarchelledPlayer> { Value = player });
+        }
 
         //virtual void OnPlayerReleasedGhost(Player* /*player*/) { }
         public static int OnPlayerReleasedGhost(IntPtr arg, int argLength)
         {
-            Console.WriteLine("OnPlayerReleasedGhost");
             var player = new MarchelledPlayer(arg);
+            sendPlayerEvent("OnPlayerReleasedGhost", player);
             return 0;
         }
         // Called on Send Initial Packets Before Add To Map
         //virtual void OnSendInitialPacketsBeforeAddToMap(Player* /*player*/, WorldPacket& /*data*/) { }
         public static void OnSendInitialPacketsBeforeAddToMap(IntPtr arg, int argLength)
         {
-            Console.WriteLine("OnPlayerReleasedGhost");
             var player = new MarchelledPlayer(arg);
+            sendPlayerEvent("OnSendInitialPacketsBeforeAddToMap", player);
+            return;
         }
 
         // Called when a player does a desertion action (see BattlegroundDesertionType)
         //virtual void OnBattlegroundDesertion(Player* /*player*/, BattlegroundDesertionType const /*desertionType*/) { }
+        public static void OnBattlegroundDesertion(IntPtr arg, int argLength)
+        {
+            var player = new MarchelledPlayer(arg);
+            sendPlayerEvent("OnBattlegroundDesertion", player);
+            return;
+        }
 
         // Called when a player completes a quest
         //virtual void OnPlayerCompleteQuest(Player* /*player*/, Quest const* /*quest_id*/) { }
-
+        public static void OnPlayerCompleteQuest(IntPtr arg, int argLength)
+        {
+            var player = new MarchelledPlayer(arg);
+            sendPlayerEvent("OnPlayerCompleteQuest", player);
+            return;
+        }
         // Called when a player kills another player
         //virtual void OnPVPKill(Player* /*killer*/, Player* /*killed*/) { }
-
+        public static void OnPVPKill(IntPtr arg, int argLength)
+        {
+            var player = new MarchelledPlayer(arg);
+            sendPlayerEvent("OnPVPKill", player);
+            return;
+        }
         // Called when a player toggles pvp
         //virtual void OnPlayerPVPFlagChange(Player* /*player*/, bool /*state*/) { }
-
+        public static void OnPlayerPVPFlagChange(IntPtr arg, int argLength)
+        {
+            var player = new MarchelledPlayer(arg);
+            sendPlayerEvent("OnPlayerPVPFlagChange", player);
+            return;
+        }
         // Called when a player kills a creature
         //virtual void OnCreatureKill(Player* /*killer*/, Creature* /*killed*/) { }
-
+        public static void OnCreatureKill(IntPtr arg, int argLength)
+        {
+            var player = new MarchelledPlayer(arg);
+            sendPlayerEvent("OnCreatureKill", player);
+            return;
+        }
         // Called when a player's pet kills a creature
         //virtual void OnCreatureKilledByPet(Player* /*PetOwner*/, Creature* /*killed*/) { }
-
+        public static void OnCreatureKilledByPet(IntPtr arg, int argLength)
+        {
+            var player = new MarchelledPlayer(arg);
+            sendPlayerEvent("OnCreatureKilledByPet", player);
+            return;
+        }
         // Called when a player is killed by a creature
         //virtual void OnPlayerKilledByCreature(Creature* /*killer*/, Player* /*killed*/) { }
-
+        public static void OnPlayerKilledByCreature(IntPtr arg, int argLength)
+        {
+            var player = new MarchelledPlayer(arg);
+            sendPlayerEvent("OnPlayerKilledByCreature", player);
+            return;
+        }
         // Called when a player's level changes (right after the level is applied)
         //virtual void OnLevelChanged(Player* /*player*/, uint8 /*oldlevel*/) { }
-
+        public static void OnLevelChanged(IntPtr arg, int argLength)
+        {
+            var player = new MarchelledPlayer(arg);
+            sendPlayerEvent("OnLevelChanged", player);
+            return;
+        }
         // Called when a player's free talent points change (right before the change is applied)
         //virtual void OnFreeTalentPointsChanged(Player* /*player*/, uint32 /*points*/) { }
-
+        public static void OnFreeTalentPointsChanged(IntPtr arg, int argLength)
+        {
+            var player = new MarchelledPlayer(arg);
+            sendPlayerEvent("OnFreeTalentPointsChanged", player);
+            return;
+        }
         // Called when a player's talent points are reset (right before the reset is done)
         //virtual void OnTalentsReset(Player* /*player*/, bool /*noCost*/) { }
-
+        public static void OnTalentsReset(IntPtr arg, int argLength)
+        {
+            var player = new MarchelledPlayer(arg);
+            sendPlayerEvent("OnTalentsReset", player);
+            return;
+        }
         // Called for player::update
         //virtual void OnBeforeUpdate(Player* /*player*/, uint32 /*p_time*/) { }
+        public static void OnBeforeUpdate(IntPtr arg, int argLength)
+        {
+            var player = new MarchelledPlayer(arg);
+            //sendPlayerEvent("OnUpdate", player);
+            return;
+        }
         //virtual void OnUpdate(Player* /*player*/, uint32 /*p_time*/) { }
-
+        public static void OnUpdate(IntPtr arg, int argLength)
+        {
+            var player = new MarchelledPlayer(arg);
+            //sendPlayerEvent("OnUpdate", player);
+            return;
+        }
         // Called when a player's money is modified (before the modification is done)
         //virtual void OnMoneyChanged(Player* /*player*/, int32& /*amount*/) { }
 
@@ -101,7 +187,7 @@ namespace AzerothServiceBus
         //virtual void OnChat(Player* /*player*/, uint32 /*type*/, uint32 /*lang*/, std::string& /*msg*/, Channel* /*channel*/) { }
 
         // Both of the below are called on emote opcodes.
-        //virtual void OnEmote(Player* /*player*/, uint32 /*emote*/) { }
+        //virtual void OnTextEmote(Player* /*player*/, uint32 /*emote*/) { }
 
         //virtual void OnTextEmote(Player* /*player*/, uint32 /*textEmote*/, uint32 /*emoteNum*/, ObjectGuid /*guid*/) { }
 
@@ -113,11 +199,8 @@ namespace AzerothServiceBus
 
         // Called when a player logs in.
         //virtual void OnLogin(Player* /*player*/) { }
-        public static int OnLogin(IntPtr arg, int argLength)
-        {
-            var player = new MarchelledPlayer(arg);
-            return 0;
-        }
+        public static void OnLogin(IntPtr arg, int argLength) { var player = new MarchelledPlayer(arg); sendPlayerEvent("OnLogin", player); return; }
+
         // Called when a player logs out.
         //virtual void OnLogout(Player* /*player*/) { }
 

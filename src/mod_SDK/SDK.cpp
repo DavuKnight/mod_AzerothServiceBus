@@ -4,17 +4,10 @@
 
 #include <iostream>
 #include "SDK.h"
+#include <Log.h>
 
-extern "C" __declspec(dllexport) char* SDKEntryPoint(wchar_t*  path, wchar_t* action, wchar_t* jsonBody)
+extern "C" __declspec(dllexport) int LogInformation(const char* catagory_t, const char* message_t)
 {
-	if (path == L"Chat")
-	{
-	}
-	else
-	{
-		std::wcout << path;
-		std::wcout << action;
-		std::wcout << jsonBody;
-	}
-	return NULL;
+    LOG_INFO(catagory_t, message_t);
+    return 1;
 }

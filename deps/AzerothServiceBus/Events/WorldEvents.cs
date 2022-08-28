@@ -1,33 +1,30 @@
 using Confluent.Kafka;
+using System.Configuration;
 
 namespace AzerothServiceBus
 {
     public static class WorldEvents
     {
-        static IProducer<Null, Null> nullBuilder;
-        static WorldEvents()
-        {
-            try
-            {
-                var config = new ProducerConfig { 
-                    BootstrapServers = "localhost:9092"
-                };
-                nullBuilder = new ProducerBuilder<Null, Null>(config).Build();
-            }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc.Message);
-            }
-        }
+        static ServiceBusDomain domain = ServiceBusDomain.Instance;
 
         private static void sendNullEvent(string eventName)
         {
-            Console.WriteLine(eventName);
-            //Action<DeliveryReport<Null, Null>> handler = r =>
-            //Console.WriteLine(!r.Error.IsError
-            //    ? $"Delivered message to {r.TopicPartitionOffset}"
-            //    : $"Delivery Error: {r.Error.Reason}");
-            nullBuilder.Produce(eventName, new Message<Null, Null>(), null);
+
+            try
+                {
+                    Console.WriteLine(eventName + " is Now Sending===============================");
+
+                    domain.NullEventProducer.Produce(eventName, new Message<Null, Null>(), r =>
+Console.WriteLine(!r.Error.IsError
+    ? $"Delivered message to {r.TopicPartitionOffset}"
+    : $"Delivery Error: {r.Error.Reason}"));
+
+                    Console.WriteLine(eventName + " Sent");
+                }
+                catch (Exception exc)
+                {
+                    Console.Write(exc.Message);
+                }
         }
 
         // Called when the open/closed state of the world changes.
@@ -77,11 +74,14 @@ namespace AzerothServiceBus
         {
             try
             {
+                Console.WriteLine("Trying to Poke It-6;");
+                DotNetCoreAzeroth.PInvoke.LogInformation("server.loading","****************AzerothEventHub Loaded.***************************");
                 sendNullEvent(WorldsEventNames.OnBeforeConfigLoad);
                 return 0;
             }
-            catch
+            catch(Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 return 1;
             }
         }
