@@ -1,3 +1,5 @@
+**** Complete rewrite needed *** about half of this is wrong.
+
 This is not your typical Module this module is designed to allow devlopment in the DotNet Development language. This is acomplished using the mod in the src/mod_DotNetCoreEvents module which Launches a hosted copy of DotNetCore from withen the WorldServer and then calls into the DotNetCore layer contained in the deps/AzerothDotNetCore project. AzerothDotNetCore then looks at its Appsettings to find any registered consumers for that event and calls into the dll specified executing whatever code it finds contained therein. 
 If the desired result from the event is a change in the worldserver the DotNetCode can call back to the WorldServer by referencing the sdk in deps/DotNetCoreAzeroth. DotNetCoreAzeroth then calls into the WorldServer.exe using the mehods exposed in the src mod_sdk module.
 
