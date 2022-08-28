@@ -25,7 +25,7 @@ namespace DotNetCore {
             string_t dllPath_t(dllPath.length(), L' ');
             std::copy(dllPath.begin(), dllPath.end(), dllPath_t.begin());
 
-            const char_t* dotnet_type = ST("DotNetLib.WorldScript, DotNetLib");
+            const char_t* dotnet_type = ST("AzerothServiceBus.WorldEvents, AzerothServiceBus");
 
             int OnOpenStateChangeRC = load_assembly_and_get_function_pointer(dllPath_t.c_str(), dotnet_type, ST("OnOpenStateChange"), nullptr /*delegate_type_name*/, nullptr, (void**)&onOpenStateChange);
             int OnAfterConfigLoadRC = load_assembly_and_get_function_pointer(dllPath_t.c_str(), dotnet_type, ST("OnAfterConfigLoad"), nullptr /*delegate_type_name*/, nullptr, (void**)&onAfterConfigLoad);

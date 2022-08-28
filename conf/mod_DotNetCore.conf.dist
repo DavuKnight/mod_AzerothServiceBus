@@ -1,1 +1,10 @@
-DotNetCore.DllPath = "C:\Repo\GitHub\DavidStrickland0\Azoreoth.DotNetCore\DotNetLib\bin\Debug\DotNetLib.dll"
+###############################################
+# mod_DotNetCore configuration file #
+###############################################
+
+#Should be a DLL that depends on the AzerothDotNetCoreProject and Overrides 1 or more of the Events you wish to Process. 
+DotNetCore.DllPath = "Dot net Dll to be executed."
+
+#The CLR Hosting Requires a runtimeconfig. This is created automatically if you created a exe. However if you are using a DLL you'll need to change xsome config to get it.
+# Add <EnableDynamicLoading>true</EnableDynamicLoading> to your Project file and you should find the runtime in your bin folder post compile.
+DotNetCore.runtimeconfig = "Specify the runtime config file. Should contain the app settings."

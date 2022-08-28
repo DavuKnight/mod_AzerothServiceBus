@@ -20,7 +20,8 @@
 #include <Windows.h>
 
 //Encourage Linker To include DeclSpecs declared in the Facade
-#include "JsonAPI/JsonApi.h"
+#include "../mod_SDK/SDK.h"
+#include <Log.h>
 
 #define STR(s) L ## s
 #define CH(c) L ## c
@@ -54,8 +55,10 @@ namespace DotNetCore
         string_t dllPath_t(dllPath.length(), L' ');
         std::copy(dllPath.begin(), dllPath.end(), dllPath_t.begin());
 
-        auto pos = dllPath_t.find_last_of(DIR_SEPARATOR);
-        string_t root_path = dllPath_t.substr(0, pos + 1);
+        std::string dllruntimeconfig = sConfigMgr->GetOption<std::string>("DotNetCore.runtimeconfig", "");
+        string_t dllruntimeconfig_t(dllruntimeconfig.length(), L' ');
+        std::copy(dllruntimeconfig.begin(), dllruntimeconfig.end(), dllruntimeconfig_t.begin());
+
 
         //
         // STEP 1: Load HostFxr and get exported hosting functions
@@ -65,10 +68,9 @@ namespace DotNetCore
         //
         // STEP 2: Initialize and start the .NET Core runtime
         //
-        const std::basic_string<char_t> config_path = root_path + STR("DotNetLib.runtimeconfig.json");
+        const std::basic_string<char_t> config_path = dllruntimeconfig_t;
         load_assembly_and_get_function_pointer_fn load_assembly_and_get_function_pointer = nullptr;
         load_assembly_and_get_function_pointer = get_dotnet_load_assembly(config_path.c_str());
-        assert(load_assembly_and_get_function_pointer != nullptr && "Failure: get_dotnet_load_assembly()");
         return load_assembly_and_get_function_pointer;
 
     }
@@ -82,8 +84,11 @@ namespace DotNetCore
 void AddDotNetCoreScripts()
 {
     load_assembly_and_get_function_pointer_fn fn = DotNetCore::initializeDotNetCore();
-    DotNetCore::AddDotNetCoreWorldScripts(fn);
-    DotNetCore::AddDotNetCorePlayerScripts(fn);
+    if (fn != nullptr)
+    {
+        DotNetCore::AddDotNetCoreWorldScripts(fn);
+        //DotNetCore::AddDotNetCorePlayerScripts(fn);
+    }
 }
 
 /********************************************************************************************
@@ -110,7 +115,7 @@ namespace DotNetCore
     }
 
     // <SnippetLoadHostFxr>
-    // Using the nethost library, discover the location of hostfxr and get exports
+    // Using the nethost library, discover the location of hostfxr and get the methods that are exported
     bool load_hostfxr()
     {
         // Pre-allocate a large buffer for the path to hostfxr
@@ -141,7 +146,7 @@ namespace DotNetCore
         int loadDotNetCoreResult = init_fptr(config_path, nullptr, &cxt);
         if (loadDotNetCoreResult != 0 || cxt == nullptr)
         {
-            std::cerr << "Init failed: " << std::hex << std::showbase << loadDotNetCoreResult << std::endl;
+            LOG_WARN("mod_DotNetCore.loading", "mod_DotNetCore Init failed: DotNetCore Config File failed to load" );
             close_fptr(cxt);
             return nullptr;
         }
@@ -152,9 +157,9 @@ namespace DotNetCore
             hdt_load_assembly_and_get_function_pointer,
             &load_assembly_and_get_function_pointer);
         if (rc != 0 || load_assembly_and_get_function_pointer == nullptr)
-            std::cerr << "Get delegate failed: " << std::hex << std::showbase << rc << std::endl;
+            LOG_WARN("mod_DotNetCore.loading","Get delegate failed: Could not find the desired function pointer");
 
-        close_fptr(cxt);
+        //close_fptr(cxt);
         return (load_assembly_and_get_function_pointer_fn)load_assembly_and_get_function_pointer;
     }
     // </SnippetInitialize>

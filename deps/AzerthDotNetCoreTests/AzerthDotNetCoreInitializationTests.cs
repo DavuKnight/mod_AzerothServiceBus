@@ -1,10 +1,10 @@
 
 
-using AzerothDotNetCore;
+using AzerothServiceBus;
 
 namespace AzerthDotNetCoreTests
 {
-    public class Tests
+    public class AzerthDotNetCoreInitializationTests
     {
         [SetUp]
         public void Setup()
@@ -14,9 +14,7 @@ namespace AzerthDotNetCoreTests
         [Test]
         public void OnBeforeWorldInitialized()
         {
-            IntPtr args = default(IntPtr);
-            int arglength = 0;
-            WorldEvents.OnBeforeWorldInitialized(args, arglength);
+            WorldEvents.OnBeforeConfigLoad(default(IntPtr), 0);
         }
     }
 }
