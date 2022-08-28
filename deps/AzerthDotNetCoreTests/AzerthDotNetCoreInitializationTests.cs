@@ -1,7 +1,4 @@
 
-
-using AzerothServiceBus;
-
 namespace AzerthDotNetCoreTests
 {
     public class AzerthDotNetCoreInitializationTests
@@ -14,7 +11,7 @@ namespace AzerthDotNetCoreTests
         [Test]
         public void OnBeforeWorldInitialized()
         {
-            WorldEvents.OnBeforeConfigLoad(default(IntPtr), 0);
+
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Confluent.Kafka;
+using Confluent.Kafka;
 
 namespace AzerothServiceBus
 {
@@ -23,11 +23,11 @@ namespace AzerothServiceBus
         private static void sendNullEvent(string eventName)
         {
             Console.WriteLine(eventName);
-            Action<DeliveryReport<Null, Null>> handler = r =>
-            Console.WriteLine(!r.Error.IsError
-                ? $"Delivered message to {r.TopicPartitionOffset}"
-                : $"Delivery Error: {r.Error.Reason}");
-            nullBuilder.Produce(eventName, new Message<Null, Null>(), handler);
+            //Action<DeliveryReport<Null, Null>> handler = r =>
+            //Console.WriteLine(!r.Error.IsError
+            //    ? $"Delivered message to {r.TopicPartitionOffset}"
+            //    : $"Delivery Error: {r.Error.Reason}");
+            nullBuilder.Produce(eventName, new Message<Null, Null>(), null);
         }
 
         // Called when the open/closed state of the world changes.

@@ -26,21 +26,25 @@ namespace AzerothServiceBus.Server
 
             using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
             {
-                IEnumerable<string> topics = new List<string>() 
-                { 
-                    WorldsEventNames.OnStartup,
-                    WorldsEventNames.OnShutdownCancel,
-                    WorldsEventNames.OnMotdChange,
-                    WorldsEventNames.OnOpenStateChange
-                };
-                consumer.Subscribe("^WorldsEventNames.*");
-                while (!stoppingToken.IsCancellationRequested)
+                try
                 {
-                    var consumeResult = consumer.Consume(stoppingToken);
-                    if(consumeResult != null)
+                    consumer.Subscribe("^WorldsEventNames.*");
+                    while (!stoppingToken.IsCancellationRequested)
                     {
-                        Console.WriteLine(consumeResult.Topic);
+                        var consumeResult = consumer.Consume(stoppingToken);
+                        if (consumeResult != null)
+                        {
+                            Console.WriteLine(consumeResult.Topic);
+                        }
                     }
+                }
+                catch(Exception exc)
+                {
+                    Console.WriteLine(exc.Message);
+                }
+                finally
+                {
+                    Console.WriteLine("Bye");
                 }
             }
             await Task.CompletedTask;

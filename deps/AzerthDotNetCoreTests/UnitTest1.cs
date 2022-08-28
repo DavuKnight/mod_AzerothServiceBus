@@ -1,7 +1,5 @@
 
 
-using AzerothDotNetCore;
-
 namespace AzerthDotNetCoreTests
 {
     public class Tests
@@ -16,7 +14,7 @@ namespace AzerthDotNetCoreTests
         {
             IntPtr args = default(IntPtr);
             int arglength = 0;
-            WorldEvents.OnBeforeWorldInitialized(args, arglength);
+
         }
     }
 }
