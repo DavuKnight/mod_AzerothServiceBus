@@ -12,12 +12,10 @@ namespace AzerothServiceBus
 
             try
                 {
-                    Console.WriteLine(eventName + " is Now Sending===============================");
-
                     domain.NullEventProducer.Produce(eventName, new Message<Null, Null>(), r =>
-Console.WriteLine(!r.Error.IsError
-    ? $"Delivered message to {r.TopicPartitionOffset}"
-    : $"Delivery Error: {r.Error.Reason}"));
+                        Console.WriteLine(!r.Error.IsError
+                            ? $"Delivered message to {r.TopicPartitionOffset}"
+                            : $"Delivery Error: {r.Error.Reason}"));
 
                     Console.WriteLine(eventName + " Sent");
                 }
@@ -75,7 +73,7 @@ Console.WriteLine(!r.Error.IsError
             try
             {
                 Console.WriteLine("Trying to Poke It-6;");
-                DotNetCoreAzeroth.PInvoke.LogInformation("server.loading","****************AzerothEventHub Loaded.***************************");
+                DotNetCoreAzeroth.PInvoke.LogInformation("server.loading","AzerothEventHub Loaded.");
                 sendNullEvent(WorldsEventNames.OnBeforeConfigLoad);
                 return 0;
             }

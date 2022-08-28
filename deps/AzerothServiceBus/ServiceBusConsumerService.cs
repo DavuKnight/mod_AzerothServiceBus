@@ -55,7 +55,7 @@ namespace AzerothServiceBus
 
         private async Task processEvent(ConsumeResult<Ignore, string> consumeResult)
         {
-            Console.WriteLine("Event Received");
+            PInvoke.LogInformation("server.starting","-------------------------------------------------Event Received ------------------------------------------");
         }
     }
 }
