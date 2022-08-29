@@ -33,7 +33,7 @@ namespace AzerothServiceBus
                 try
                 {
                     consumer.Subscribe("^ServerEvents.*");
-                    Console.WriteLine("starting Async Consumer");
+                    _logger.LogDebug("Starting Async Consumer");
                     while (!stoppingToken.IsCancellationRequested)
                     {
                         await Task.Yield();
@@ -41,7 +41,7 @@ namespace AzerothServiceBus
 
                         if (consumeResult != null)
                         {
-                            await processEvent(consumeResult);
+                            processEvent(consumeResult);
                         }
                     }
                 }
@@ -53,9 +53,9 @@ namespace AzerothServiceBus
             await Task.CompletedTask;
         }
 
-        private async Task processEvent(ConsumeResult<Ignore, string> consumeResult)
+        private void processEvent(ConsumeResult<Ignore, string> consumeResult)
         {
-            PInvoke.LogInformation("server.starting","-------------------------------------------------Event Received ------------------------------------------");
+            PInvoke.LogInformation("server.starting","");
         }
     }
 }

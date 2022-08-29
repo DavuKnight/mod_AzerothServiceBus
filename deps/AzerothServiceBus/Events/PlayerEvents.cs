@@ -11,7 +11,7 @@ namespace AzerothServiceBus
 {
     public static class PlayerEvents
     {
-        static IProducer<Null, MarchelledPlayer> nullBuilder;
+        static IProducer<Null, MarchelledPlayer>? nullBuilder;
         static PlayerEvents()
         {
             try
@@ -20,7 +20,7 @@ namespace AzerothServiceBus
                 {
                     BootstrapServers = "localhost:9092"
                 };
-                nullBuilder = new ProducerBuilder<Null, MarchelledPlayer>(config).Build();
+                    nullBuilder = new ProducerBuilder<Null, MarchelledPlayer>(config).Build();
             }
             catch (Exception exc)
             {
@@ -31,6 +31,7 @@ namespace AzerothServiceBus
         private static void sendPlayerEvent(string eventName, MarchelledPlayer player)
         {
             Console.WriteLine(eventName);
+            if(nullBuilder!=null)
             nullBuilder.Produce(eventName, new Message<Null, MarchelledPlayer> { Value = player });
         }
 

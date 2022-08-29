@@ -146,7 +146,7 @@ namespace DotNetCore
         int loadDotNetCoreResult = init_fptr(config_path, nullptr, &cxt);
         if (loadDotNetCoreResult != 0 || cxt == nullptr)
         {
-            LOG_WARN("mod_DotNetCore.loading", "mod_DotNetCore Init failed: DotNetCore Config File failed to load" );
+            LOG_WARN("mod_AzerothServiceBus.loading", "mod_AzerothServiceBus Init failed: DotNetCore Config File failed to load" );
             close_fptr(cxt);
             return nullptr;
         }
@@ -157,7 +157,7 @@ namespace DotNetCore
             hdt_load_assembly_and_get_function_pointer,
             &load_assembly_and_get_function_pointer);
         if (rc != 0 || load_assembly_and_get_function_pointer == nullptr)
-            LOG_WARN("mod_DotNetCore.loading","Get delegate failed: Could not find the desired function pointer");
+            LOG_WARN("mod_AzerothServiceBus.loading","Get delegate failed: Could not find the desired function pointer");
 
         //close_fptr(cxt);
         return (load_assembly_and_get_function_pointer_fn)load_assembly_and_get_function_pointer;

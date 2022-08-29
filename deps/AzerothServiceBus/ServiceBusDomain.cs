@@ -7,13 +7,12 @@ using AzerothServiceBus.Events;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using DotNetCoreAzeroth;
 
 namespace AzerothServiceBus
 {
     internal class ServiceBusDomain
     {
-        internal IProducer<Null, Null> NullEventProducer;
+        internal IProducer<Null, Null>? NullEventProducer;
         private static ServiceBusDomain instance = new ServiceBusDomain();
         private ServiceBusDomain() {
             initialize();

@@ -32,13 +32,26 @@ namespace AzerothDotNetCore
                 var moduleAssembly = Assembly.LoadFrom(module.Value);
                 foreach(Type modulesType in moduleAssembly.GetTypes())
                 {
-                    if(modulesType.IsAssignableTo(typeof(IWorldEvents)))
+                    if (modulesType.IsAssignableTo(typeof(IWorldEvents)))
                     {
-                        services.AddSingleton<IWorldEvents>((s)=>Activator.CreateInstance(modulesType) as IWorldEvents);
+                        services.AddSingleton<IWorldEvents>((s) =>
+                        {
+                            var instance = Activator.CreateInstance(modulesType) as IWorldEvents;
+                            if (instance != null)
+                                return instance;
+                            throw new NullReferenceException($"Failed to create {modulesType.Name}");
+                        });
                     }
                     if (modulesType.IsAssignableTo(typeof(IPlayerEvents)))
                     {
-                        services.AddSingleton<IPlayerEvents>((s) => Activator.CreateInstance(modulesType) as IPlayerEvents);
+                        services.AddSingleton<IPlayerEvents>((s) =>
+                        {
+                            var instance = Activator.CreateInstance(modulesType) as IPlayerEvents;
+                            if (instance != null)
+                                return instance;
+                            throw new NullReferenceException($"Failed to create {modulesType.Name}");
+
+                        });
                     }
 
                 }

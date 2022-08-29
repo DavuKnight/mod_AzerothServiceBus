@@ -21,24 +21,24 @@ Though it has many of the same pieces a typical module it has many that are well
 
 # Overview
 ## docker-compose.yml
-	This is the Docker compose file to install the currently recommended version of kafta along with its dependencies
+This is the Docker compose file to install the currently recommended version of kafta along with its dependencies
 ## mod_AzerothServiceBus.cmake
-	This is simaler to the CMakeList.Txt you might see in other modules. However instead of running as a Spererate project this file gets embedded in the Modules CMakeList.Txt via a bit of magic with its name.
+This is simaler to the CMakeList.Txt you might see in other modules. However instead of running as a Spererate project this file gets embedded in the Modules CMakeList.Txt via a bit of magic with its name.
 ## LICENSE
-	MIT
+MIT
 ## mod_AzerothServiceBus.sln
-	Solution File for the module. Much is writtent in C# however this does not prevent any language or system from subscribing to Kafka and processing Events. C# was just the initial language and the one the first example is in. Hopefull other examples will be forth coming.
+Solution File for the module. Much is writtent in C# however this does not prevent any language or system from subscribing to Kafka and processing Events. C# was just the initial language and the one the first example is in. Hopefull other examples will be forth coming.
 ## README.md
-	This File
+This File
 
 ## conf
 ### mod_AzerothServiceBus.conf.dist
-		The one configuration file. It's going to take some work but hopefully this will contain the one and only configuration file needed for the module. There are at the time of this writing a number of appsettings and hardcoded values that will eventually find there way here 
+The one configuration file. It's going to take some work but hopefully this will contain the one and only configuration file needed for the module. There are at the time of this writing a number of appsettings and hardcoded values that will eventually find there way here 
 ## src
 ### mod_DotNetCore_loader.cpp
-	Initialization code for the two C++ parts of the Module
+Initialization code for the two C++ parts of the Module
 ### mod_SDK
-	This is were all the functionality we will consume is contained. The logic we referenced about to actually react to the event and pop the Quest Window is here and written/rewritten in a way that it can be consumed via a exported via extern extern "C" __declspec(dllexport).
+This is were all the functionality we will consume is contained. The logic we referenced about to actually react to the event and pop the Quest Window is here and written/rewritten in a way that it can be consumed via a exported via extern extern "C" __declspec(dllexport).
 ### mod_EventPublishers
 Its not certain at what point or how many Kafka events can be published to without a significant performance impact. For that reason not every event is published also there are many "events" that act more like functions returning a result after process these will be handled on a case by cases basis. 
 #### DotNetCore_loader.cpp
@@ -62,19 +62,35 @@ Example of a DotNetCore Kafka Client that processes events and reacts to them.
 
 
 # Getting Started
-	Open your copy of the azerothCore_wotlk. If you do not yet have a copy it can be retrieved via. 
-	Git bash using
-	git clone https://github.com/azerothcore/azerothcore-wotlk.git
-	However there are more steps to setting up Azerothcore then a simple clone so make sure your authserver and worldserver are working to you expectations before continueing.
+Open your copy of the azerothCore_wotlk. If you do not yet have a copy it can be retrieved via. 
+Git bash using
+git clone https://github.com/azerothcore/azerothcore-wotlk.git
+However there are more steps to setting up Azerothcore then a simple clone so make sure your authserver and worldserver are working to you expectations before continueing.
 
-	If your WorldServer and AuthServer are working navigate to the modules directory within the azerothcore-wotlk directory. Here get a copy of this repository. The command to do this in at gitbash is
-	git clone https://github.com/DavuKnight/mod_AzerothServiceBus
-	
-	Once downloaded you will see the docker-compose.yml file described above. Docker and docker compose are outside this overview but for this solution to work you will need a version of Kafka installed. This Docker-Copose file is what we setup for development with the config we know works.
-	
-	Once Kafka is setup run CMake and ensure the modules deploy You should see additional entries in your CMake Script stating that mod_SDK was installed, the mod_DotNetCoreEvents was installed and that nethost.lib has been successfully located and referenced.
-	
-	At this point the Mod is ready but doesnt actually do anything. That is because you need to provide the logic now for what you want to do.  
+If your WorldServer and AuthServer are working navigate to the modules directory within the azerothcore-wotlk directory. Here get a copy of this repository. The command to do this in at gitbash is
+git clone https://github.com/DavuKnight/mod_AzerothServiceBus
 
-	An example of this in C# can be run by compiling the  mod_DotNetCore.sln and running the DotNet Core Server.
+Once downloaded you will see the docker-compose.yml file described above. Docker and docker compose are outside this overview but for this solution to work you will need a version of Kafka installed. This Docker-Copose file is what we setup for development with the config we know works.
 
+Once Kafka is setup run CMake and ensure the modules deploy You should see additional entries in your CMake Script stating that mod_SDK was installed, the mod_DotNetCoreEvents was installed and that nethost.lib has been successfully located and referenced.
+
+At this point the Mod is ready but doesnt actually do anything. That is because you need to provide the logic now for what you want to do.  
+
+An example of this in C# can be run by compiling the  mod_DotNetCore.sln and running the DotNet Core Server.
+
+# So what does this give us
+If you actually got this far I'll throw out a few fun ideas you might do with this this module
+- Multi Server Chatroom
+- BiDirectional Guild Chat/Discord chat
+- Tie in any Discord Bot into Game Chat
+- Progressive Deserter Punishments The more you desert the worse it gets
+- Progressive Quest Chat. As the Quest progresses you can get chat messages from a NPC.
+- Auction House Mobile App.
+
+#Final Notes
+
+## The Good News is the Event is outside the server and the logic can be access from outside the server so you can do anything.
+
+## The Bad news is that it takes longer to do what ever it is you want done.
+ 
+## by combining this Module with your own custom module you can get the best of both worlds. 

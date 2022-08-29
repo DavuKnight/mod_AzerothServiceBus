@@ -12,6 +12,7 @@ namespace AzerothServiceBus
 
             try
                 {
+                if (domain?.NullEventProducer != null)
                     domain.NullEventProducer.Produce(eventName, new Message<Null, Null>(), r =>
                         Console.WriteLine(!r.Error.IsError
                             ? $"Delivered message to {r.TopicPartitionOffset}"

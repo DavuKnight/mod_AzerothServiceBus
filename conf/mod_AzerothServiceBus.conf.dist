@@ -1,5 +1,5 @@
 ###############################################
-# mod_DotNetCore configuration file #
+# mod_AzerothServiceBus configuration file #
 ###############################################
 
 #Should be a DLL that depends on the AzerothDotNetCoreProject and Overrides 1 or more of the Events you wish to Process. 

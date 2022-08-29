@@ -15,6 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AzerothServiceBusContracts\AzerothServiceBusContracts.csproj" />
+    <ProjectReference Include="..\AzerothServiceBus.Contracts\AzerothServiceBus.Contracts.csproj" />
   </ItemGroup>
 </Project>

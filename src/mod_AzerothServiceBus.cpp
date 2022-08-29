@@ -5,7 +5,7 @@
 #include <SDK.h>
 void AddDotNetCoreScripts();
 
-void Addmod_DotNetCoreScripts(){
+void Addmod_AzerothServiceBusScripts(){
     AddDotNetCoreScripts();
 
     //Got to be an easier way
