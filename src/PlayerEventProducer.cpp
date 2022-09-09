@@ -21,7 +21,7 @@
   * Typical include path in a real application would be
   * #include <librdkafka/rdkafkacpp.h>
   */
-#include "../librdkafka-1.8.2/src-cpp/rdkafkacpp.h"
+#include "../deps/librdkafka-1.8.2/src-cpp/rdkafkacpp.h"
 // Add player scripts
 class PlayerEventProducer : public PlayerScript
 {

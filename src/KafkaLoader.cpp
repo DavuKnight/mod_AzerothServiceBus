@@ -13,7 +13,7 @@
  * Typical include path in a real application would be
  * #include <librdkafka/rdkafkacpp.h>
  */
-#include "../librdkafka-1.8.2/src-cpp/rdkafkacpp.h"
+#include "../deps/librdkafka-1.8.2/src-cpp/rdkafkacpp.h"
 #include "PlayerEventProducer.cpp"
 #include "WorldEventProducer.cpp"
 using namespace RdKafka;
@@ -43,7 +43,7 @@ void AddMyEventScripts(RdKafka::Producer*);
 // Add all
 // cf. the naming convention https://github.com/azerothcore/azerothcore-wotlk/blob/master/doc/changelog/master.md#how-to-upgrade-4
 // additionally replace all '-' in the module folder name with '_' here
-void Addmod_KaftaScripts()
+void Addmod_AzerothServiceBusScripts()
 {
 
     std::string Server = "127.0.0.1";
