@@ -12,7 +12,7 @@
 #include <cstdio>
 #include <csignal>
 #include <cstring>
-
+#include "../deps/librdkafka-1.8.2/src-cpp/rdkafkacpp.h"
 #if _AIX
 #include <unistd.h>
 #endif
@@ -21,100 +21,236 @@
   * Typical include path in a real application would be
   * #include <librdkafka/rdkafkacpp.h>
   */
-#include "../librdkafka-1.8.2/src-cpp/rdkafkacpp.h"
+#include "../deps/librdkafka-1.8.2/src-cpp/rdkafkacpp.h"
+
+#include <DeliveryReport.h>
+
+
+static volatile sig_atomic_t run = 1;
+
+static void sigterm(int sig) {
+    run = 0;
+}
   // Add player scripts
-class WorldEventProducer : public WorldScript
+namespace mod_AzerothServiceBus
 {
-public:
-    RdKafka::Producer* _producer;
-
-    WorldEventProducer(RdKafka::Producer* producer) : WorldScript("WorldEventProducer") {
-        _producer = producer;
-
-    }
-    void OnAfterConfigLoad(bool reload) override
+    class WorldEventProducer : public WorldScript
     {
-        std::string body = "";
-        _producer->produce("World:OnAfterConfigLoad", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+    public:
+        RdKafka::Producer* _producer;
 
-    }
+        WorldEventProducer(RdKafka::Producer* producer) : WorldScript("WorldEventProducer") {
+            _producer = producer;
+        }
 
-    void OnAfterUnloadAllMaps()override
-    {
-        std::string body = "";
-        _producer->produce("World:OnAfterUnloadAllMaps", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+        void OnBeforeConfigLoad(bool reload) override
+        {
+            try
+            {
+                std::string body = "";
+                RdKafka::ErrorCode resp = _producer->produce("W.OnBeforeConfigLoad", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
 
-    }
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
+        void OnAfterConfigLoad(bool reload) override
+        {
+            try
+            {
+                std::string body = "";
+                RdKafka::ErrorCode resp = _producer->produce("W.OnAfterConfigLoad", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
 
-    void OnBeforeConfigLoad(bool reload) override
-    {
-        std::string body = "";
-        _producer->produce("World:OnBeforeConfigLoad", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
 
-    }
+        void OnAfterUnloadAllMaps()override
+        {
+            try
+            {
+                std::string body = "";
+                RdKafka::ErrorCode resp = _producer->produce("W.OnAfterUnloadAllMaps", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
 
-    void OnBeforeFinalizePlayerWorldSession(uint32& cacheversion) override
-    {
-        std::string body = "";
-        _producer->produce("World:OnBeforeFinalizePlayerWorldSession", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
 
-    }
+        void OnBeforeFinalizePlayerWorldSession(uint32& cacheversion) override
+        {
+            try
+            {
+                std::string body = "";
+                RdKafka::ErrorCode resp = _producer->produce("W.OnBeforeFinalizePlayerWorldSession", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
 
-    void OnBeforeWorldInitialized() override
-    {
-        std::string body = "";
-        _producer->produce("World:OnBeforeWorldInitialized", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
 
-    }
-    void OnLoadCustomDatabaseTable() override
-    {
-        std::string body = "";
-        _producer->produce("World:OnLoadCustomDatabaseTable", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+        void OnBeforeWorldInitialized() override
+        {
+            try
+            {
+                std::string body = "";
+                RdKafka::ErrorCode resp = _producer->produce("W.OnBeforeWorldInitialized", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
 
-    }
-    void OnMotdChange(std::string& newMotd) override
-    {
-        std::string body = "";
-        _producer->produce("World:OnMotdChange", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
+        void OnLoadCustomDatabaseTable() override
+        {
+            try
+            {
+                std::string body = "";
+                RdKafka::ErrorCode resp = _producer->produce("W.OnLoadCustomDatabaseTable", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
 
-    }
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
+        void OnMotdChange(std::string& newMotd) override
+        {
+            try
+            {
+                std::string body = "";
+                RdKafka::ErrorCode resp = _producer->produce("W.OnMotdChange", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
 
-    void OnOpenStateChange(bool open) override
-    {
-        std::string body = "";
-        _producer->produce("World:OnOpenStateChange", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
 
-    }
-    
-    void OnShutdown() override
-    {
-        std::string body = "";
-        _producer->produce("World:OnShutdown", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+        void OnOpenStateChange(bool open) override
+        {
+            try
+            {
+                std::string body = "";
+                RdKafka::ErrorCode resp = _producer->produce("W.OnOpenStateChange", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
 
-    }
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
 
-    void OnShutdownCancel() override
-    {
-        std::string body = "";
-        _producer->produce("World:OnShutdownCancel", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+        void OnShutdown() override
+        {
+            try
+            {
+                std::string body = "";
+                RdKafka::ErrorCode resp = _producer->produce("W.OnShutdown", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
 
-    }
-    void OnShutdownInitiate(ShutdownExitCode code, ShutdownMask mask) override
-    {
-        std::string body = "";
-        _producer->produce("World:OnShutdownInitiate", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
 
-    }
+        void OnShutdownCancel() override
+        {
+            try
+            {
+                std::string body = "";
+                RdKafka::ErrorCode resp = _producer->produce("W.OnShutdownCancel", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
 
-    void OnStartup() override
-    {
-        std::string body = "";
-        _producer->produce("World:OnStartup", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
+        void OnShutdownInitiate(ShutdownExitCode code, ShutdownMask mask) override
+        {
+            try
+            {
+                std::string body = "";
+                RdKafka::ErrorCode resp = _producer->produce("W.OnShutdownInitiate", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
 
-    }
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
 
-    void OnUpdate(uint32 diff) override
-    {
-        _producer->poll(0);
-    }
-};
+        void OnStartup() override
+        {
+            try
+            {
+                _producer->flush(0);
+            }
+            catch (...)
+            {
+            }
+        }
+
+        void OnUpdate(uint32 diff) override
+        {
+            _producer->poll(0);
+        }
+    };
+}

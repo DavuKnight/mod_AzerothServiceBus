@@ -13,39 +13,18 @@
  * Typical include path in a real application would be
  * #include <librdkafka/rdkafkacpp.h>
  */
-#include "../librdkafka-1.8.2/src-cpp/rdkafkacpp.h"
+#include "../deps/librdkafka-1.8.2/src-cpp/rdkafkacpp.h"
 #include "PlayerEventProducer.cpp"
 #include "WorldEventProducer.cpp"
 using namespace RdKafka;
 
 
-static volatile sig_atomic_t run = 1;
-
-static void sigterm(int sig) {
-    run = 0;
-}
-class ExampleDeliveryReportCb : public RdKafka::DeliveryReportCb {
-public:
-    void dr_cb(RdKafka::Message& message) {
-        /* If message.err() is non-zero the message delivery failed permanently
-         * for the message. */
-        if (message.err())
-            std::cerr << "% Message delivery failed: " << message.errstr() << std::endl;
-        else
-            std::cerr << "% Message delivered to topic " << message.topic_name() <<
-            " [" << message.partition() << "] at offset " <<
-            message.offset() << std::endl;
-    }
-};
-// From SC
-void AddMyEventScripts(RdKafka::Producer*);
 
 // Add all
 // cf. the naming convention https://github.com/azerothcore/azerothcore-wotlk/blob/master/doc/changelog/master.md#how-to-upgrade-4
 // additionally replace all '-' in the module folder name with '_' here
-void Addmod_KaftaScripts()
+void Addmod_AzerothServiceBusScripts()
 {
-
     std::string Server = "127.0.0.1";
 
 
@@ -66,46 +45,21 @@ void Addmod_KaftaScripts()
         exit(1);
     }
 
-    signal(SIGINT, sigterm);
-    signal(SIGTERM, sigterm);
+    //signal(SIGINT, sigterm);
+    //signal(SIGTERM, sigterm);
 
-    /* Set the delivery report callback.
-     * This callback will be called once per message to inform
-     * the application if delivery succeeded or failed.
-     * See dr_msg_cb() above.
-     * The callback is only triggered from ::poll() and ::flush().
-     *
-     * IMPORTANT:
-     * Make sure the DeliveryReport instance outlives the Producer object,
-     * either by putting it on the heap or as in this case as a stack variable
-     * that will NOT go out of scope for the duration of the Producer object.
-     */
-    ExampleDeliveryReportCb ex_dr_cb;
-
-    if (conf->set("dr_cb", &ex_dr_cb, errstr) != RdKafka::Conf::CONF_OK) {
-        std::cerr << errstr << std::endl;
-        exit(1);
-    }
-
-    /*
-     * Create producer instance.
-     */
+     /*
+      * Create producer instance.
+      */
     RdKafka::Producer* producer = RdKafka::Producer::create(conf, errstr);
     if (!producer) {
         std::cerr << "Failed to create producer: " << errstr << std::endl;
         exit(1);
     }
 
-    delete conf;
+    new mod_AzerothServiceBus::PlayerEventProducer(producer);
+    new mod_AzerothServiceBus::WorldEventProducer(producer);
 
-    AddMyEventScripts(producer);
-
-
-}
-void AddMyEventScripts(RdKafka::Producer* producer)
-{
-    new PlayerEventProducer(producer);
-    new WorldEventProducer(producer);
 
 }
 
