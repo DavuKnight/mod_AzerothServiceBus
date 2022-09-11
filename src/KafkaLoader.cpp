@@ -14,8 +14,11 @@
  * #include <librdkafka/rdkafkacpp.h>
  */
 #include "../deps/librdkafka-1.8.2/src-cpp/rdkafkacpp.h"
+#include <boost/json/src.hpp>
+
 #include "PlayerEventProducer.cpp"
 #include "WorldEventProducer.cpp"
+
 using namespace RdKafka;
 
 

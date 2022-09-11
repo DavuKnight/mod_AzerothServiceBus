@@ -24,6 +24,29 @@ namespace Examples.CSharp
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
 
+            //using (var consumer = new ProducerBuilder<Ignore, string>(config).Build())
+            //{
+            //    IEnumerable<string> topics = new List<string>()
+            //    {
+            //        WorldsEventNames.OnStartup,
+            //        WorldsEventNames.OnShutdownCancel,
+            //        WorldsEventNames.OnMotdChange,
+            //        WorldsEventNames.OnOpenStateChange
+            //    };
+            //    consumer.Subscribe("^W.*");
+            //    consumer.Subscribe("^PlayerScript.*");
+            //    while (!stoppingToken.IsCancellationRequested)
+            //    {
+            //        var consumeResult = consumer.Consume(stoppingToken);
+            //        if (consumeResult != null)
+            //        {
+            //            Console.WriteLine(consumeResult.Topic);
+            //            Console.WriteLine(consumeResult.Message.Value);
+
+            //        }
+            //    }
+            //}
+
             using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
             {
                 IEnumerable<string> topics = new List<string>() 
@@ -33,8 +56,7 @@ namespace Examples.CSharp
                     WorldsEventNames.OnMotdChange,
                     WorldsEventNames.OnOpenStateChange
                 };
-                consumer.Subscribe("^W.*");
-                consumer.Subscribe("^P.*");
+                consumer.Subscribe(new List<string>() { "^WorldScript.*", "^PlayerScript.*" });
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     var consumeResult = consumer.Consume(stoppingToken);

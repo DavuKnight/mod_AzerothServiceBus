@@ -16,14 +16,12 @@
 #if _AIX
 #include <unistd.h>
 #endif
-
+#include "Serialization/Templates.h"
  /*
   * Typical include path in a real application would be
   * #include <librdkafka/rdkafkacpp.h>
   */
 #include "../deps/librdkafka-1.8.2/src-cpp/rdkafkacpp.h"
-
-#include <DeliveryReport.h>
 
 
 static volatile sig_atomic_t run = 1;
@@ -48,7 +46,7 @@ namespace mod_AzerothServiceBus
             try
             {
                 std::string body = "";
-                RdKafka::ErrorCode resp = _producer->produce("W.OnBeforeConfigLoad", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                RdKafka::ErrorCode resp = _producer->produce("WorldScript.OnBeforeConfigLoad", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
                 if (resp != RdKafka::ERR_NO_ERROR) {
                     std::cerr << "% Produce failed: " <<
                         RdKafka::err2str(resp) << std::endl;
@@ -65,7 +63,7 @@ namespace mod_AzerothServiceBus
             try
             {
                 std::string body = "";
-                RdKafka::ErrorCode resp = _producer->produce("W.OnAfterConfigLoad", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                RdKafka::ErrorCode resp = _producer->produce("WorldScript.OnAfterConfigLoad", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
                 if (resp != RdKafka::ERR_NO_ERROR) {
                     std::cerr << "% Produce failed: " <<
                         RdKafka::err2str(resp) << std::endl;
@@ -83,7 +81,7 @@ namespace mod_AzerothServiceBus
             try
             {
                 std::string body = "";
-                RdKafka::ErrorCode resp = _producer->produce("W.OnAfterUnloadAllMaps", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                RdKafka::ErrorCode resp = _producer->produce("WorldScript.OnAfterUnloadAllMaps", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
                 if (resp != RdKafka::ERR_NO_ERROR) {
                     std::cerr << "% Produce failed: " <<
                         RdKafka::err2str(resp) << std::endl;
@@ -101,7 +99,7 @@ namespace mod_AzerothServiceBus
             try
             {
                 std::string body = "";
-                RdKafka::ErrorCode resp = _producer->produce("W.OnBeforeFinalizePlayerWorldSession", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                RdKafka::ErrorCode resp = _producer->produce("WorldScript.OnBeforeFinalizePlayerWorldSession", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
                 if (resp != RdKafka::ERR_NO_ERROR) {
                     std::cerr << "% Produce failed: " <<
                         RdKafka::err2str(resp) << std::endl;
@@ -119,7 +117,7 @@ namespace mod_AzerothServiceBus
             try
             {
                 std::string body = "";
-                RdKafka::ErrorCode resp = _producer->produce("W.OnBeforeWorldInitialized", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                RdKafka::ErrorCode resp = _producer->produce("WorldScript.OnBeforeWorldInitialized", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
                 if (resp != RdKafka::ERR_NO_ERROR) {
                     std::cerr << "% Produce failed: " <<
                         RdKafka::err2str(resp) << std::endl;
@@ -136,7 +134,7 @@ namespace mod_AzerothServiceBus
             try
             {
                 std::string body = "";
-                RdKafka::ErrorCode resp = _producer->produce("W.OnLoadCustomDatabaseTable", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                RdKafka::ErrorCode resp = _producer->produce("WorldScript.OnLoadCustomDatabaseTable", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
                 if (resp != RdKafka::ERR_NO_ERROR) {
                     std::cerr << "% Produce failed: " <<
                         RdKafka::err2str(resp) << std::endl;
@@ -153,7 +151,7 @@ namespace mod_AzerothServiceBus
             try
             {
                 std::string body = "";
-                RdKafka::ErrorCode resp = _producer->produce("W.OnMotdChange", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                RdKafka::ErrorCode resp = _producer->produce("WorldScript.OnMotdChange", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
                 if (resp != RdKafka::ERR_NO_ERROR) {
                     std::cerr << "% Produce failed: " <<
                         RdKafka::err2str(resp) << std::endl;
@@ -171,7 +169,7 @@ namespace mod_AzerothServiceBus
             try
             {
                 std::string body = "";
-                RdKafka::ErrorCode resp = _producer->produce("W.OnOpenStateChange", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                RdKafka::ErrorCode resp = _producer->produce("WorldScript.OnOpenStateChange", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
                 if (resp != RdKafka::ERR_NO_ERROR) {
                     std::cerr << "% Produce failed: " <<
                         RdKafka::err2str(resp) << std::endl;
@@ -189,7 +187,7 @@ namespace mod_AzerothServiceBus
             try
             {
                 std::string body = "";
-                RdKafka::ErrorCode resp = _producer->produce("W.OnShutdown", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                RdKafka::ErrorCode resp = _producer->produce("WorldScript.OnShutdown", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
                 if (resp != RdKafka::ERR_NO_ERROR) {
                     std::cerr << "% Produce failed: " <<
                         RdKafka::err2str(resp) << std::endl;
@@ -207,7 +205,7 @@ namespace mod_AzerothServiceBus
             try
             {
                 std::string body = "";
-                RdKafka::ErrorCode resp = _producer->produce("W.OnShutdownCancel", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                RdKafka::ErrorCode resp = _producer->produce("WorldScript.OnShutdownCancel", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
                 if (resp != RdKafka::ERR_NO_ERROR) {
                     std::cerr << "% Produce failed: " <<
                         RdKafka::err2str(resp) << std::endl;
@@ -224,7 +222,7 @@ namespace mod_AzerothServiceBus
             try
             {
                 std::string body = "";
-                RdKafka::ErrorCode resp = _producer->produce("W.OnShutdownInitiate", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                RdKafka::ErrorCode resp = _producer->produce("WorldScript.OnShutdownInitiate", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
                 if (resp != RdKafka::ERR_NO_ERROR) {
                     std::cerr << "% Produce failed: " <<
                         RdKafka::err2str(resp) << std::endl;
