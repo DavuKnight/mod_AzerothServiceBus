@@ -4,11 +4,14 @@
 
 #include "ScriptMgr.h"
 #include "Player.h"
+#include "BattlegroundQueue.h"
 #include "Config.h"
 #include "Chat.h"
 #include "Channel.h"
 #include "Guild.h"
 #include "Vehicle.h"
+#include "InstanceScript.h"
+#include "MapInstanced.h"
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -64,6 +67,50 @@ tag_invoke(
     };
 }
 
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    ArenaTeam* t)
+{
+
+    jv = {
+        {"id", t->GetId()}
+    };
+}
+
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    AuctionEntry* t)
+{
+    jv = {
+        {"id", t->Id}
+    };
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    AuctionHouseObject* t)
+{
+
+    jv = {};
+}
+
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    AuctionHouseMgr* t)
+{
+    jv = {
+    };
+}
 
 void
 tag_invoke(
@@ -110,12 +157,43 @@ void
 tag_invoke(
     const boost::json::value_from_tag&,
     boost::json::value& jv,
+    BattlegroundBracketId t)
+{
+
+    jv = static_cast<int>(t);
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
     const BattlegroundDesertionType t)
 {
 
     jv =  static_cast<int>(t);
 }
 
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    BattlegroundQueue* t)
+{
+
+    jv = {
+
+    };
+}
+
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    BattlegroundTypeId t)
+{
+    jv = static_cast<int>(t);
+}
 
 void
 tag_invoke(
@@ -147,7 +225,7 @@ void
 tag_invoke(
     const boost::json::value_from_tag&,
     boost::json::value& jv,
-    CreatureTemplate* const t)
+    CreatureTemplate const* t)
 {
 
     jv = {
@@ -173,6 +251,18 @@ tag_invoke(
 
     jv = {
         {"Guid", t->GetGUID().GetRawValue()}
+    };
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    GroupQueueInfo* t)
+{
+
+    jv = {
+        {"teamId", t->teamId}
     };
 }
 
@@ -219,10 +309,21 @@ tag_invoke(
     boost::json::value& jv,
     InstanceSave* t)
 {
-
     jv = {
         {"id", t->GetInstanceId()}
     };
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    InstanceScript* t)
+{
+    jv = {
+        {"id", t->instance->GetInstanceId()}
+    };
+
 }
 
 void
@@ -265,6 +366,17 @@ void
 tag_invoke(
     const boost::json::value_from_tag&,
     boost::json::value& jv,
+    MapInstanced* t)
+{
+    jv = {
+        {"id",t->GetInstanceId()}
+    };
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
     MailDraft* t)
 {
     jv = {
@@ -273,6 +385,27 @@ tag_invoke(
     };
 }
 
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    MailReceiver const t)
+{
+    jv = {
+        //todo
+    };
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    MailSender const t)
+{
+    jv = {
+        //todo
+    };
+}
 
 void
 tag_invoke(
@@ -321,6 +454,22 @@ tag_invoke(
     };
 }
 
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    PvPDifficultyEntry const* t)
+{
+
+    jv = {
+        {"bracketId", t->bracketId},
+        {"difficulty", t->difficulty},
+        {"mapId", t->mapId},
+        {"maxLevel", t->maxLevel},
+        {"minLevel", t->minLevel}
+    };
+}
+
 
 void
 tag_invoke(
@@ -352,6 +501,14 @@ tag_invoke(
     jv = {
         {"Guid", t.Id}
     };
+}
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    TeamId t)
+{
+    jv = static_cast<int>(t);
 }
 
 void
