@@ -260,3 +260,27 @@ tag_invoke(
         {"item", t.item}
     };
 }
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    Weather* t)
+{
+
+    jv = {
+        {"scriptId", t->GetScriptId()},
+        {"zone", t->GetZone()}
+    };
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    WeatherState t)
+{
+
+    jv = static_cast<int>(t);
+};
+

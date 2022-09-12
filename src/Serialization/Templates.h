@@ -136,3 +136,15 @@ tag_invoke(
     boost::json::value& jv,
     VendorItem const t)
     ;
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    Weather* t)
+    ;
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    WeatherState t)
+    ;
