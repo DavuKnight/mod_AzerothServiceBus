@@ -33,13 +33,70 @@ namespace mod_AzerothServiceBus
         }
 
         // Runs on start event
-        void OnStart(uint16 EventID) override{ }
+        void OnStart(uint16 EventID) override
+        {
+            try
+            {
+                boost::json::value jv = {
+                    {"EventID",boost::json::value_from(EventID) }
+                };
+                std::string body = serialize(jv);
+
+                RdKafka::ErrorCode resp = _producer->produce("GameEventScript.OnStart", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
 
         // Runs on stop event
-        void OnStop(uint16 EventID) override{ }
+        void OnStop(uint16 EventID) override
+        {
+            try
+            {
+                boost::json::value jv = {
+                    {"EventID",boost::json::value_from(EventID) }
+                };
+                std::string body = serialize(jv);
+
+                RdKafka::ErrorCode resp = _producer->produce("GameEventScript.OnStop", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
 
         // Runs on event check
-        void OnEventCheck(uint16 EventID)override { }
+        void OnEventCheck(uint16 EventID)override
+        {
+            try
+            {
+                boost::json::value jv = {
+                    {"EventID",boost::json::value_from(EventID) }
+                };
+                std::string body = serialize(jv);
+
+                RdKafka::ErrorCode resp = _producer->produce("GameEventScript.OnEventCheck", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
 
     };
 }

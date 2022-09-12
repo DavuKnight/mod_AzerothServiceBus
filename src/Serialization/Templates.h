@@ -35,6 +35,38 @@ tag_invoke(
     const boost::json::value_from_tag&,
     boost::json::value& jv,
     AchievementEntry const* t);
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    AreaTrigger const* t);
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    AuraApplication const* t);
+
+//AuraRemoveMode
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    AuraRemoveMode t);
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    AuraEffect const* t);
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    AuraEffect const* t);
+
 void
 tag_invoke(
     const boost::json::value_from_tag&,
@@ -71,6 +103,12 @@ void
 tag_invoke(
     const boost::json::value_from_tag&,
     boost::json::value& jv,
+    GridMap* t)
+    ;
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
     Group* t)
     ;
 void
@@ -88,12 +126,49 @@ void
 tag_invoke(
     const boost::json::value_from_tag&,
     boost::json::value& jv,
+    InstanceSave* t);
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
     Item* t);
 void
 tag_invoke(
     const boost::json::value_from_tag&,
     boost::json::value& jv,
-    ItemTemplate const t);
+    ItemTemplate const* t);
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    Loot* t);
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    LootStore const t);
+
+//MailDraft
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    MailDraft* t);
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    Map* t);
+
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    Object* t);
 
 void
 tag_invoke(
@@ -105,13 +180,25 @@ void
 tag_invoke(
     const boost::json::value_from_tag&,
     boost::json::value& jv,
-    Player* const t);
+    Pet const* t);
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    Player const* t);
 
 void
 tag_invoke(
     const boost::json::value_from_tag&,
     boost::json::value& jv,
     Quest const* t);
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    RemoveMethod  t);
 
 void
 tag_invoke(
@@ -129,6 +216,12 @@ tag_invoke(
     const boost::json::value_from_tag&,
     boost::json::value& jv,
     TempSummon* const t)
+    ;
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    Vehicle const* t)
     ;
 void
 tag_invoke(

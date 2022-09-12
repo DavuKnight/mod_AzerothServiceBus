@@ -8,6 +8,7 @@
 #include "Chat.h"
 #include "Channel.h"
 #include "Guild.h"
+#include "Vehicle.h"
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -49,6 +50,47 @@ tag_invoke(
     jv = {
         {"id", t->ID}
     };
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    AreaTrigger const* t)
+{
+
+    jv = {
+        {"entry", t->entry}
+    };
+}
+
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    AuraApplication const* t)
+{
+    jv = {};
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    AuraEffect const* t)
+{
+    jv = { };
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    AuraRemoveMode t)
+{
+
+    jv = static_cast<int>(t);
 }
 
 
@@ -113,7 +155,15 @@ tag_invoke(
     };
 }
 
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    GridMap* t)
+{
 
+    jv = { };
+}
 void
 tag_invoke(
     const boost::json::value_from_tag&,
@@ -162,18 +212,79 @@ tag_invoke(
     };
 }
 
+
 void
 tag_invoke(
     const boost::json::value_from_tag&,
     boost::json::value& jv,
-    ItemTemplate const t)
+    InstanceSave* t)
 {
 
     jv = {
-        {"Guid", t.ItemId}
+        {"id", t->GetInstanceId()}
     };
 }
 
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    ItemTemplate const* t)
+{
+
+    jv = {
+        {"id", t->ItemId}
+    };
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    Loot* t)
+{
+
+    jv = {
+        {"id", t->containerGUID}
+    };
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    Map* t)
+{
+
+    jv = {
+        {"id", t->GetId()}
+    };
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    MailDraft* t)
+{
+    jv = {
+        {"subject",t->GetSubject()},
+        {"body",t->GetBody()}
+    };
+}
+
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    Object* t)
+{
+
+    jv = {
+        {"entry", t->GetEntry()}
+    };
+}
 
 void
 tag_invoke(
@@ -187,12 +298,22 @@ tag_invoke(
     };
 }
 
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    Pet const* t)
+{
+    jv = {
+        //{"Guid", t->GetGUID().GetRawValue()}
+    };
+}
 
 void
 tag_invoke(
     const boost::json::value_from_tag&,
     boost::json::value& jv,
-    Player* const t)
+    Player const* t)
 {
 
     jv = {
@@ -212,7 +333,15 @@ tag_invoke(
         {"Quest", t->GetQuestId()}
     };
 }
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    RemoveMethod t)
+{
+    jv = static_cast<int>(t);
 
+}
 void
 tag_invoke(
     const boost::json::value_from_tag&,
@@ -246,6 +375,18 @@ tag_invoke(
 
     jv = {
         {"Guid", t->GetGUID().GetRawValue()}
+    };
+}
+
+void
+tag_invoke(
+    const boost::json::value_from_tag&,
+    boost::json::value& jv,
+    Vehicle* t)
+{
+
+    jv = {
+        {"item", t->GetCreatureEntry()}
     };
 }
 

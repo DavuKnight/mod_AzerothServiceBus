@@ -38,6 +38,27 @@ namespace mod_AzerothServiceBus
          * @param player Contains information about the Player
          * @param gold Contains information about money
          */
-        void OnLootMoney(Player* player, uint32 gold)override { }
+        void OnLootMoney(Player* player, uint32 gold)override
+        {
+            try
+            {
+                boost::json::value jv = {
+                    {"player",boost::json::value_from(player) },
+                    {"gold",boost::json::value_from(gold) }
+                };
+                std::string body = serialize(jv);
+
+                RdKafka::ErrorCode resp = _producer->produce("MapScript.OnCreate", RdKafka::Topic::PARTITION_UA, RdKafka::Producer::RK_MSG_COPY, const_cast<char*>(body.c_str()), body.size(), NULL, 0, 0, NULL, NULL);
+                if (resp != RdKafka::ERR_NO_ERROR) {
+                    std::cerr << "% Produce failed: " <<
+                        RdKafka::err2str(resp) << std::endl;
+                }
+                _producer->poll(0);
+            }
+            catch (...)
+            {
+            }
+        }
+
     };
 }
